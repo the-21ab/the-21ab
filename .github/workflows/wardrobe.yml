@@ -1,0 +1,38 @@
+name: wardrobe
+
+on:
+  push:
+    paths: ["wardrobe/**", ".github/workflows/wardrobe.yml"]
+  pull_request:
+    paths: ["wardrobe/**", ".github/workflows/wardrobe.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wardrobe
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: wardrobe/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and smoke test the image
+        working-directory: wardrobe
+        run: |
+          docker build -t wardrobe .
+          docker run -d --name wardrobe -p 3000:3000 -e ADMIN_TOKEN=ci-owner-password wardrobe
+          for i in $(seq 1 20); do curl -fs localhost:3000/api/health && break; sleep 1; done
+          curl -fs -X POST localhost:3000/api/items -H "Authorization: Bearer ci-owner-password" \
+            -F image=@public/icon-512.png -F tags="ci, test" > /dev/null
+          curl -fs localhost:3000/api/items.csv | grep -q "ci, test"

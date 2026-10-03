@@ -1,0 +1,32 @@
+# Fly.io config. Run `fly launch --copy-config --no-deploy` once (pick your own app name),
+# then the commands in README.md. Everything you upload lives on the "wardrobe_data" volume.
+app = "my-wardrobe"
+primary_region = "lhr"
+
+[build]
+
+[env]
+  DATA_DIR = "/data"
+  PORT = "3000"
+
+[[mounts]]
+  source = "wardrobe_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    timeout = "3s"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

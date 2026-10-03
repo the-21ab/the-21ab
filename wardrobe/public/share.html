@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Share & API</title>
+  <meta name="theme-color" content="#2f4a3a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/share.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/" id="home-link"><img src="/icon.svg" alt=""> Wardrobe</a>
+      <a class="btn" href="/" id="closet-link">Closet</a>
+    </div>
+  </header>
+
+  <main class="wrap share-page">
+    <h1>Share your closet</h1>
+    <p>Hand any of these links to another app, a spreadsheet, or a person. They always show what's in the closet right now, no syncing needed.</p>
+
+    <div class="banner" id="privacy"></div>
+
+    <section class="panel" id="links">
+      <h2>Links</h2>
+    </section>
+
+    <section class="panel">
+      <h2>Google Sheets (a spreadsheet with pictures)</h2>
+      <p>Paste this into cell A1 of an empty sheet. It refreshes on its own about once an hour.</p>
+      <div class="copy"><code id="sheets-import"></code><button class="btn" type="button" data-copy="sheets-import">Copy</button></div>
+      <p>To see the photos, put this in the first empty column on row 2 and fill it down (column F holds the thumbnail link):</p>
+      <div class="copy"><code id="sheets-image">=IMAGE(F2)</code><button class="btn" type="button" data-copy="sheets-image">Copy</button></div>
+      <p>Excel works too: Data → From Web, then paste the CSV link.</p>
+    </section>
+
+    <section class="panel">
+      <h2>From code</h2>
+      <p>Every item has an id, title, tags, notes, full size image and thumbnail URLs (with width and height), and timestamps. Lists are paged 100 at a time; follow <code>next</code> until it's null.</p>
+      <pre id="code-js"></pre>
+      <pre id="code-curl"></pre>
+      <pre id="code-py"></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Filtering and syncing</h2>
+      <pre id="code-params"></pre>
+      <p>Feeds send an <code>ETag</code>. Send it back as <code>If-None-Match</code> and you get an empty <code>304</code> when nothing changed, so polling every few seconds is cheap.
+        To mirror the closet somewhere else, poll <code>updated_since</code> for new and edited pieces and <code>/api/deleted?since=</code> for removed ones.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Adding clothes from another app</h2>
+      <p>Needs the owner password as a bearer token. The web app shrinks photos and strips location data before uploading; raw API uploads are stored as sent.</p>
+      <pre id="code-upload"></pre>
+    </section>
+  </main>
+</body>
+</html>
