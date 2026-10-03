@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wardrobe</title>
+  <meta name="description" content="Every piece of clothing I own, with photos and tags.">
+  <meta name="theme-color" content="#2f4a3a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/gallery.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand compact" href="/" id="home-link" aria-label="Wardrobe home"><img src="/icon.svg" alt=""> <span class="brand-name">Wardrobe</span> <small id="count"></small></a>
+      <a class="btn" href="/share" id="share-link">Share<span class="wide-only">&nbsp;&amp; API</span></a>
+      <button class="btn ghost" type="button" id="signin" hidden>Sign in</button>
+      <a class="btn primary" href="/add" id="add-link" hidden>+ Add</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="toolbar">
+      <input class="search" id="search" type="search" placeholder="Search clothes, tags, notes…" aria-label="Search" autocomplete="off">
+      <select id="sort" aria-label="Sort">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="updated">Recently edited</option>
+        <option value="title">A to Z</option>
+      </select>
+    </div>
+    <nav class="tagbar" aria-label="Filter by tag"><div class="chips" id="tags"></div></nav>
+    <p class="summary" id="summary" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden></div>
+    <div class="more"><button class="btn" type="button" id="more" hidden>Load more</button></div>
+  </main>
+</body>
+</html>

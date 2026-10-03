@@ -1,0 +1,19 @@
+{
+  "name": "wardrobe",
+  "version": "1.0.0",
+  "description": "Snap a photo of a piece of clothing, tag it, and share the whole closet as a live JSON/CSV feed any app can read.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/**/*.test.js\""
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}

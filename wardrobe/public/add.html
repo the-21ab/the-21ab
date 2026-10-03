@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Add clothing</title>
+  <meta name="theme-color" content="#2f4a3a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/add.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/icon.svg" alt=""> Wardrobe</a>
+      <a class="btn" href="/">Closet</a>
+    </div>
+  </header>
+
+  <main class="wrap add-page">
+    <section class="panel" id="signed-out" hidden>
+      <h2>Sign in to add clothes</h2>
+      <p>Only the owner can add to the closet. Use the password the server printed when it first started.</p>
+      <button class="btn primary big" type="button" id="signin">Sign in</button>
+    </section>
+
+    <form id="form" hidden novalidate>
+      <div class="add-page">
+        <div class="capture" id="capture">
+          <div class="capture-empty" id="capture-empty">
+            <p>Lay it flat or hang it up, good light helps.</p>
+            <div class="capture-buttons">
+              <label class="btn primary big" for="camera">📷 Take photo</label>
+              <label class="btn big" for="library">Choose photo</label>
+            </div>
+          </div>
+          <div class="capture-preview" id="capture-preview" hidden>
+            <img id="preview" alt="Photo preview">
+            <div class="capture-tools">
+              <button class="btn" type="button" id="rotate">↻ Rotate</button>
+              <label class="btn" for="camera">Retake</label>
+              <label class="btn" for="library">Pick another</label>
+            </div>
+          </div>
+          <input class="visually-hidden" type="file" id="camera" accept="image/*" capture="environment" tabindex="-1">
+          <input class="visually-hidden" type="file" id="library" accept="image/*" tabindex="-1">
+        </div>
+
+        <div class="field">
+          <label class="label" for="tag-input">Tags <span class="hint">type and press enter, or tap a suggestion</span></label>
+          <div id="tags"></div>
+        </div>
+
+        <label class="field">
+          <span>Name <span class="hint">(optional)</span></span>
+          <input class="input" id="title" maxlength="140" placeholder="e.g. Navy wool overcoat" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span>Notes <span class="hint">(optional)</span></span>
+          <textarea class="input" id="notes" maxlength="4000" placeholder="Brand, size, where it came from, what it goes with…"></textarea>
+        </label>
+
+        <label class="check"><input type="checkbox" id="keep-tags"> Keep these tags for the next piece</label>
+
+        <div class="error" id="error" role="alert" hidden></div>
+        <div class="progress" id="progress" hidden><div></div></div>
+        <button class="btn primary big block" type="submit" id="save">Save to closet</button>
+      </div>
+    </form>
+
+    <section class="done" id="done" hidden>
+      <img id="done-photo" alt="">
+      <h2>Saved</h2>
+      <p class="detail-dates" id="done-text"></p>
+      <div class="actions">
+        <button class="btn primary big" type="button" id="another">📷 Add another</button>
+        <a class="btn big" href="/" id="view">See closet</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
